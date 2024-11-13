@@ -1,4 +1,5 @@
 ## Basic Weather Watcher
+![demo_1](https://github.com/user-attachments/assets/f1b2a1b8-ea43-43f9-8543-5961ac4bae95)
 
 ## Descripción
 
@@ -33,10 +34,12 @@ Basic Weather Watcher es un dashboard básico a que muestra en tres streams de c
    ```
 
 2. **Ejecuta la Aplicación**:
-   - Abre el archivo `SalouCams.html` en tu navegador web.
+   - Abre el archivo `basic_weatrcher_watcher.html` en tu navegador web.
 
 3. **Personalización**:
-   - Puedes personalizar las URLs de las cámaras web modificando la variable `videoSources` en el archivo JavaScript.
+   Abre el archivo html con un editor de texto:
+   
+   - Personaliza las URLs de las cámaras web modificando la variable `videoSources`.
    ```javascript
    const videoSources = {
        'video1': 'URL_DEL_VIDEO_1',
@@ -44,7 +47,19 @@ Basic Weather Watcher es un dashboard básico a que muestra en tres streams de c
        'video3': 'URL_DEL_VIDEO_3'
    };
    ```
-
+  - Personaliza el mapa en la accediendo a https://embed.windy.com/config/map y añade el contenido de src = del coódigo proporcionado:
+   ```
+          <iframe width="650" height="450" src="URL_LARGA" frameborder="0"></iframe>
+   ```
+en el src del iframe dentro del html:
+   ```
+    <div class="map-container">
+        <iframe 
+            src="URL_LARGA" 
+            frameborder="0"
+        </iframe>
+    </div>
+   ```
 ## Tecnologías Utilizadas
 
 - **Video.js**: Un framework de JavaScript para el manejo de videos HTML5.
