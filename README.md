@@ -1,5 +1,6 @@
 ## Basic Weather Watcher
 ![demo_1](https://github.com/user-attachments/assets/f1b2a1b8-ea43-43f9-8543-5961ac4bae95)
+Ejemplo con Salou
 
 ## Descripción
 
@@ -43,7 +44,7 @@ Basic Weather Watcher es un dashboard básico a que muestra en tres streams de c
    ```
    - Personaliza el mapa en la accediendo a https://embed.windy.com/config/map y añade el contenido de src = del coódigo proporcionado:
    ```
-          <iframe width="650" height="450" src="URL_LARGA" frameborder="0"></iframe>
+    <iframe width="650" height="450" src="URL_LARGA" frameborder="0"></iframe>
    ```
     en el src del iframe dentro del html:
        ```
