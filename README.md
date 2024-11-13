@@ -10,7 +10,6 @@ Basic Weather Watcher es un dashboard básico a que muestra en tres streams de c
   
 1. **Mapa Interactivo**: 
    - Integra un mapa interactivo que muestra las ubicaciones de las cámaras web.
-   - La ubicación inicial se centra en Salou (38.031° N, 1.143° O).
 
 2. **Cámaras Web en VIVO**:
    - Se han integrado tres camaras web diferentes para mostrar diferentes vistas de la ciudad de Salou.
@@ -21,7 +20,6 @@ Basic Weather Watcher es un dashboard básico a que muestra en tres streams de c
    - Las métricas de temperatura, lluvia y viento se muestran en una escala internacional.
 
 ## Requisitos
-
 - **Navegador Web**: 
   - Recomendamos usar un navegador web moderno con soporte para HTML5, CSS3 y JavaScript.
 
@@ -32,11 +30,7 @@ Basic Weather Watcher es un dashboard básico a que muestra en tres streams de c
    ```bash
    git clone https://github.com/tu-usuario/SalouCams.git
    ```
-
-2. **Ejecuta la Aplicación**:
-   - Abre el archivo `basic_weatrcher_watcher.html` en tu navegador web.
-
-3. **Personalización**:
+2. **Personalización**:
    Abre el archivo html con un editor de texto:
    
    - Personaliza las URLs de las cámaras web modificando la variable `videoSources`.
@@ -47,19 +41,24 @@ Basic Weather Watcher es un dashboard básico a que muestra en tres streams de c
        'video3': 'URL_DEL_VIDEO_3'
    };
    ```
-  - Personaliza el mapa en la accediendo a https://embed.windy.com/config/map y añade el contenido de src = del coódigo proporcionado:
+   - Personaliza el mapa en la accediendo a https://embed.windy.com/config/map y añade el contenido de src = del coódigo proporcionado:
    ```
           <iframe width="650" height="450" src="URL_LARGA" frameborder="0"></iframe>
    ```
-en el src del iframe dentro del html:
-   ```
-    <div class="map-container">
-        <iframe 
-            src="URL_LARGA" 
-            frameborder="0"
-        </iframe>
-    </div>
-   ```
+  en el src del iframe dentro del html:
+     ```
+      <div class="map-container">
+          <iframe 
+              src="URL_LARGA" 
+              frameborder="0"
+          </iframe>
+      </div>
+     ```
+     
+3. **Ejecuta la Aplicación**:
+   - Abre el archivo `basic_weatrcher_watcher.html` en tu navegador web.
+   - En sobremesa, se recomienda pulsar F11 para tamaño completo.
+
 ## Tecnologías Utilizadas
 
 - **Video.js**: Un framework de JavaScript para el manejo de videos HTML5.
