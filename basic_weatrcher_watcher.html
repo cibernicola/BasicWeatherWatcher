@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<!--
+map embedding source: https://embed.windy.com/config/map
+get your webcam strem sources url and put them in const videoSources
+-->
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <!-- Video.js CSS -->
+    <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet" />
+    <!-- hls.js JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <!-- Video.js JavaScript -->
+    <script src="https://vjs.zencdn.net/7.14.3/video.min.js"></script>
+    <style>
+        body {
+            display: grid;
+            grid-template-columns: 50% 50%;
+            grid-template-rows: auto;
+            gap: 0px;
+            padding: 0px;
+            margin: 0;
+            height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
+            background-color: black;
+        }
+        .video-container {
+            display: flex;
+            justify-content: center; /* Centra horizontalmente */
+            align-items: center;    /* Centra verticalmente */
+        }
+        .video-js {
+            width: 100%;
+            height: auto;
+        }
+        .map-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* Para una proporción de 16:9 */
+            overflow: hidden;
+        }
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="map-container">
+        <iframe 
+            src="" 
+            frameborder="0"
+        </iframe>
+    </div>
+
+    <!-- Reproductor 1: Cala llenguadets -->
+    <div class="video-container">
+        <video id="video1" class="video-js vjs-default-skin" controls preload="auto" autoplay muted></video>
+    </div>
+
+    <!-- Reproductor 2: Espigón del muelle -->
+    <div class="video-container">
+        <video id="video2" class="video-js vjs-default-skin" controls preload="auto" autoplay muted></video>
+    </div>
+
+    <!-- Reproductor 3: Playa dels capellans -->
+    <div class="video-container">
+        <video id="video3" class="video-js vjs-default-skin" controls preload="auto" autoplay muted></video>
+    </div>
+
+    <!-- Cuarta sección en blanco -->
+    <div class="video-container"></div>
+
+    <script>
+        // URLs de los videos
+        const videoSources = {
+            'video1': '',
+            'video2': '',
+            'video3': ''
+        };
+
+        // Inicializar Video.js y hls.js
+        if (Hls.isSupported()) {
+            const videos = ['video1', 'video2', 'video3'];
+            videos.forEach(videoId => {
+                const videoElement = document.getElementById(videoId);
+                const source = document.createElement('source');
+                source.src = videoSources[videoId];
+                source.type = 'application/x-mpegURL';
+                videoElement.appendChild(source);
+
+                const hlsInstance = new Hls();
+                hlsInstance.loadSource(videoSources[videoId]);
+                hlsInstance.attachMedia(videoElement);
+                hlsInstance.on(Hls.Events.MANIFEST_PARSED, function() {
+                    videoElement.play();
+                });
+            });
+        }
+    </script>
+
+</body>
+</html>
