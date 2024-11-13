@@ -45,15 +45,15 @@ Basic Weather Watcher es un dashboard básico a que muestra en tres streams de c
    ```
           <iframe width="650" height="450" src="URL_LARGA" frameborder="0"></iframe>
    ```
-  en el src del iframe dentro del html:
-     ```
-      <div class="map-container">
-          <iframe 
-              src="URL_LARGA" 
-              frameborder="0"
-          </iframe>
-      </div>
-     ```
+    en el src del iframe dentro del html:
+       ```
+        <div class="map-container">
+            <iframe 
+                src="URL_LARGA" 
+                frameborder="0"
+            </iframe>
+        </div>
+       ```
      
 3. **Ejecuta la Aplicación**:
    - Abre el archivo `basic_weatrcher_watcher.html` en tu navegador web.
