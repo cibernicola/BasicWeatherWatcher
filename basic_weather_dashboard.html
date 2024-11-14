@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -12,30 +13,77 @@
     <script src="https://vjs.zencdn.net/7.14.3/video.min.js"></script>
     <style>
         body {
+            background-color: #121212;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+    
+        #menu {
+            width: 100%;
+            height: 50px;
+            background-color: #333;
+            display: flex;
+            align-items: left;
+            padding: 0 20px;
+        }
+    
+        #menu a{
+            color: white;
+            text-decoration: none;
+            padding: 14px 16px;
+            transition: background-color 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+    
+        #menu a:hover, #menu button:hover {
+            background-color: #ddd;
+            color: black;
+        }
+    
+        @media (max-width: 768px) {
+            #menu {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+    
+            #menu a, #menu button {
+                width: 100%;
+                text-align: left;
+            }
+        }
+    
+        #maincontent {
             display: grid;
             grid-template-columns: 50% 50%;
-            grid-template-rows: auto;
-            gap: 0px;
-            padding: 0px;
-            margin: 0;
-            height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
-            background-color: black;
+            gap: 0;
+            height: calc(100vh - 50px);
+            background-color: #121212;
         }
+    
         .video-container {
-            display: flex;
-            justify-content: center; /* Centra horizontalmente */
-            align-items: center;    /* Centra verticalmente */
-        }
-        .video-js {
+            position: relative;
+            padding-bottom: 56.25%; /* Para una proporción de 16:9 */
+            overflow: hidden;
             width: 100%;
-            height: auto;
         }
+    
+        .video-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    
         .map-container {
             position: relative;
-            width: 100%;
-            padding-top: 56.25%; /* Para una proporción de 16:9 */
+            padding-bottom: 56.25%; /* Para una proporción de 16:9 */
             overflow: hidden;
+            width: 100%;
         }
+    
         .map-container iframe {
             position: absolute;
             top: 0;
@@ -46,61 +94,108 @@
         }
     </style>
 </head>
+
 <body>
-
-    <div class="map-container">
-        <iframe 
-            src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=mm&metricTemp=°C&metricWind=km/h&zoom=5&overlay=radar&product=radar&level=surface&lat=38.031&lon=1.143&pressure=true&message=true" 
-            frameborder="0"
-            title="Mapa de viento en Salou">
-        </iframe>
+    <div id = "menu">
+        <button id="fullscreenButton">full screen</button>
+        <a href="https://www.aemet.es/es/eltiempo/prediccion/municipios/salou-id43905" target="_blank">aemet.es </a>
+        <a href="https://www.meteo.cat/observacions/plujaONeu" target="_blank">meteo.cat</a>
+        
     </div>
 
-    <!-- Reproductor 1: Cala llenguadets -->
-    <div class="video-container">
-        <video id="video1" class="video-js vjs-default-skin" controls preload="auto" autoplay muted></video>
-    </div>
+    <div id="maincontent">
+        <div class="map-container">
+            <iframe 
+                src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=mm&metricTemp=°C&metricWind=km/h&zoom=5&overlay=radar&product=radar&level=surface&lat=38.031&lon=1.143&pressure=true&message=true" 
+                frameborder="0"
+                title="Mapa de viento en Salou">
+            </iframe>
+        </div>
 
-    <!-- Reproductor 2: Espigón del muelle -->
-    <div class="video-container">
-        <video id="video2" class="video-js vjs-default-skin" controls preload="auto" autoplay muted></video>
-    </div>
+        <!-- Reproductor 1: Cala llenguadets -->
+        <div class="video-container">
+            <video id="video1" class="video-js vjs-default-skin" controls preload="auto" autoplay muted></video>
+        </div>
 
-    <!-- Reproductor 3: Playa dels capellans -->
-    <div class="video-container">
-        <video id="video3" class="video-js vjs-default-skin" controls preload="auto" autoplay muted></video>
-    </div>
+        <!-- Reproductor 2: Espigón del muelle -->
+        <div class="video-container">
+            <video id="video2" class="video-js vjs-default-skin" controls preload="auto" autoplay muted></video>
+        </div>
 
-    <!-- Cuarta sección en blanco -->
-    <div class="video-container"></div>
+        <!-- Reproductor 3: Playa dels capellans -->
+        <div class="video-container">
+            <video id="video3" class="video-js vjs-default-skin" controls preload="auto" autoplay muted></video>
+        </div>
 
-    <script>
-        // URLs de los videos
-        const videoSources = {
-            'video1': 'https://5940924978228.streamlock.net:443/8107/8107/playlist.m3u8',
-            'video2': 'https://5940924978228.streamlock.net:443/8101/8101/playlist.m3u8',
-            'video3': 'https://5940924978228.streamlock.net:443/8105/8105/playlist.m3u8'
-        };
+        <script>
+            // URLs de los videos
+            const videoSources = {
+                'video1': 'https://5940924978228.streamlock.net:443/8107/8107/playlist.m3u8',
+                'video2': 'https://5940924978228.streamlock.net:443/8101/8101/playlist.m3u8',
+                'video3': 'https://5940924978228.streamlock.net:443/8105/8105/playlist.m3u8'
+            };
 
-        // Inicializar Video.js y hls.js
-        if (Hls.isSupported()) {
-            const videos = ['video1', 'video2', 'video3'];
-            videos.forEach(videoId => {
-                const videoElement = document.getElementById(videoId);
-                const source = document.createElement('source');
-                source.src = videoSources[videoId];
-                source.type = 'application/x-mpegURL';
-                videoElement.appendChild(source);
+            // Inicializar Video.js y hls.js
+            if (Hls.isSupported()) {
+                const videos = ['video1', 'video2', 'video3'];
+                videos.forEach(videoId => {
+                    const videoElement = document.getElementById(videoId);
+                    const source = document.createElement('source');
+                    source.src = videoSources[videoId];
+                    source.type = 'application/x-mpegURL';
+                    videoElement.appendChild(source);
 
-                const hlsInstance = new Hls();
-                hlsInstance.loadSource(videoSources[videoId]);
-                hlsInstance.attachMedia(videoElement);
-                hlsInstance.on(Hls.Events.MANIFEST_PARSED, function() {
-                    videoElement.play();
+                    const hlsInstance = new Hls();
+                    hlsInstance.loadSource(videoSources[videoId]);
+                    hlsInstance.attachMedia(videoElement);
+                    hlsInstance.on(Hls.Events.MANIFEST_PARSED, function() {
+                        videoElement.play();
+                    });
                 });
-            });
-        }
+
+            document.addEventListener('DOMContentLoaded', () => {
+            const fullscreenButton = document.getElementById('fullscreenButton');
+            let isFullScreenMode = false;
+
+            // Función para activar o desactivar el modo de full screen
+            function toggleFullScreen() {
+                if (isFullScreenMode) {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen().catch(error => {
+                            console.error('Error al intentar salir del modo de full screen:', error);
+                        });
+                    } else if (document.mozCancelFullScreen) { // Firefox
+                        document.mozCancelFullScreen();
+                    } else if (document.webkitExitFullscreen) { // Chrome, Safari y Opera
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) { // IE/Edge
+                        document.msExitFullscreen();
+                    }
+                } else {
+                    const bodyElement = document.body;
+                    if (bodyElement.requestFullscreen) {
+                        bodyElement.requestFullscreen().catch(error => {
+                            console.error('Error al intentar entrar en modo de full screen:', error);
+                        });
+                    } else if (bodyElement.mozRequestFullScreen) { // Firefox
+                        bodyElement.mozRequestFullScreen();
+                    } else if (bodyElement.webkitRequestFullscreen) { // Chrome, Safari y Opera
+                        bodyElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+                    } else if (bodyElement.msRequestFullscreen) { // IE/Edge
+                        bodyElement.msRequestFullscreen();
+                    }
+                }
+
+                // Cambiar el estado del botón y su texto
+                isFullScreenMode = !isFullScreenMode;
+                fullscreenButton.textContent = isFullScreenMode ? 'exit full screen' : 'full screen';
+            }
+
+            // Asignar la función al evento de clic del botón
+            fullscreenButton.addEventListener('click', toggleFullScreen);
+        });}
     </script>
 
+    </div>
 </body>
 </html>
