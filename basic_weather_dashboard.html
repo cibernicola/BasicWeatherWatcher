@@ -18,73 +18,68 @@
             padding: 0;
             font-family: Arial, sans-serif;
         }
-    
+
         #menu {
             width: 100%;
-            height: 50px;
+            height: 30px;
             background-color: #333;
             display: flex;
-            align-items: left;
-            padding: 0 20px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
         }
-    
-        #menu a{
+
+        #menu a, #menu button {
             color: white;
             text-decoration: none;
-            padding: 14px 16px;
+            padding: 5px 5px;
             transition: background-color 0.3s, color 0.3s;
             cursor: pointer;
+            display: inline-block;
         }
-    
+
         #menu a:hover, #menu button:hover {
             background-color: #ddd;
             color: black;
         }
-    
+
         @media (max-width: 768px) {
             #menu {
                 flex-direction: column;
                 align-items: flex-start;
+                justify-content: center;
             }
-    
+
             #menu a, #menu button {
                 width: 100%;
                 text-align: left;
+                margin-bottom: 5px;
             }
         }
-    
+
         #maincontent {
             display: grid;
-            grid-template-columns: 50% 50%;
-            gap: 0;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px;
             height: calc(100vh - 50px);
             background-color: #121212;
         }
-    
-        .video-container {
+
+        @media (max-width: 768px) {
+            #maincontent {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .video-container, .map-container {
             position: relative;
             padding-bottom: 56.25%; /* Para una proporción de 16:9 */
             overflow: hidden;
             width: 100%;
         }
-    
-        .video-js {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-    
-        .map-container {
-            position: relative;
-            padding-bottom: 56.25%; /* Para una proporción de 16:9 */
-            overflow: hidden;
-            width: 100%;
-        }
-    
-        .map-container iframe {
+
+        .video-js, .map-container iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -96,12 +91,11 @@
 </head>
 
 <body>
-    <div id = "menu">
+    <div id="menu">
         <button id="fullscreenButton">full screen</button>
         <a href="https://www.3cat.cat/el-temps/cameres/" target="_blank">TV3 cams</a>
         <a href="https://www.aemet.es/es/eltiempo/prediccion/municipios/salou-id43905" target="_blank">aemet.es </a>
         <a href="https://www.meteo.cat/observacions/plujaONeu" target="_blank">meteo.cat</a> 
-        
     </div>
 
     <div id="maincontent">
@@ -155,48 +149,47 @@
                 });
 
             document.addEventListener('DOMContentLoaded', () => {
-            const fullscreenButton = document.getElementById('fullscreenButton');
-            let isFullScreenMode = false;
+                const fullscreenButton = document.getElementById('fullscreenButton');
+                let isFullScreenMode = false;
 
-            // Función para activar o desactivar el modo de full screen
-            function toggleFullScreen() {
-                if (isFullScreenMode) {
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen().catch(error => {
-                            console.error('Error al intentar salir del modo de full screen:', error);
-                        });
-                    } else if (document.mozCancelFullScreen) { // Firefox
-                        document.mozCancelFullScreen();
-                    } else if (document.webkitExitFullscreen) { // Chrome, Safari y Opera
-                        document.webkitExitFullscreen();
-                    } else if (document.msExitFullscreen) { // IE/Edge
-                        document.msExitFullscreen();
+                // Función para activar o desactivar el modo de full screen
+                function toggleFullScreen() {
+                    if (isFullScreenMode) {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen().catch(error => {
+                                console.error('Error al intentar salir del modo de full screen:', error);
+                            });
+                        } else if (document.mozCancelFullScreen) { // Firefox
+                            document.mozCancelFullScreen();
+                        } else if (document.webkitExitFullscreen) { // Chrome, Safari y Opera
+                            document.webkitExitFullscreen();
+                        } else if (document.msExitFullscreen) { // IE/Edge
+                            document.msExitFullscreen();
+                        }
+                    } else {
+                        const bodyElement = document.body;
+                        if (bodyElement.requestFullscreen) {
+                            bodyElement.requestFullscreen().catch(error => {
+                                console.error('Error al intentar entrar en modo de full screen:', error);
+                            });
+                        } else if (bodyElement.mozRequestFullScreen) { // Firefox
+                            bodyElement.mozRequestFullScreen();
+                        } else if (bodyElement.webkitRequestFullscreen) { // Chrome, Safari y Opera
+                            bodyElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+                        } else if (bodyElement.msRequestFullscreen) { // IE/Edge
+                            bodyElement.msRequestFullscreen();
+                        }
                     }
-                } else {
-                    const bodyElement = document.body;
-                    if (bodyElement.requestFullscreen) {
-                        bodyElement.requestFullscreen().catch(error => {
-                            console.error('Error al intentar entrar en modo de full screen:', error);
-                        });
-                    } else if (bodyElement.mozRequestFullScreen) { // Firefox
-                        bodyElement.mozRequestFullScreen();
-                    } else if (bodyElement.webkitRequestFullscreen) { // Chrome, Safari y Opera
-                        bodyElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-                    } else if (bodyElement.msRequestFullscreen) { // IE/Edge
-                        bodyElement.msRequestFullscreen();
-                    }
+
+                    // Cambiar el estado del botón y su texto
+                    isFullScreenMode = !isFullScreenMode;
+                    fullscreenButton.textContent = isFullScreenMode ? 'exit full screen' : 'full screen';
                 }
 
-                // Cambiar el estado del botón y su texto
-                isFullScreenMode = !isFullScreenMode;
-                fullscreenButton.textContent = isFullScreenMode ? 'exit full screen' : 'full screen';
-            }
-
-            // Asignar la función al evento de clic del botón
-            fullscreenButton.addEventListener('click', toggleFullScreen);
-        });}
-    </script>
-
+                // Asignar la función al evento de clic del botón
+                fullscreenButton.addEventListener('click', toggleFullScreen);
+            });}
+        </script>
     </div>
 </body>
 </html>
