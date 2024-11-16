@@ -88,9 +88,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-const menuButton = document.getElementById('menu_button');
-const actionMenu = document.getElementById('action_menu');
 
-menuButton.addEventListener('click', () => {
-    actionMenu.classList.toggle('hidden');
-});
+
+function toggleMenu() {
+    const menu = document.getElementById('menu');
+    menu.classList.toggle('active');
+}
