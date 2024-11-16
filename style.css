@@ -1,0 +1,114 @@
+body {
+    background-color: #121212;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh; /* Esto establece la altura del body al 100% de la altura visible del viewport */
+    width: 100vw; /* Esto establece el ancho del body al 100% del ancho visible del viewport */
+}
+
+#menu {
+    height: 30px;
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 0 10px;
+}
+
+#menu > * {
+    margin-right: 1px; /* Espacio entre elementos */
+    border-right: 1px solid #555; /* Línea de separación */
+}
+
+#menu > :last-child {
+    border-right: none; /* No mostrar línea en el último elemento */
+}
+
+#menu a, #menu button {
+    color: gray;
+    text-decoration: none;
+    padding: 5px 5px;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    display: inline-block;
+}
+
+#menu a:hover, #menu button:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+@media (max-width: 768px) {
+    #menu {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    #menu a, #menu button {
+        width: 100%;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+}
+
+#maincontent {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+    height: calc(100vh - 50px);
+    background-color: #121212;
+}
+
+@media (max-width: 768px) {
+    #maincontent {
+        grid-template-columns: 1fr;
+    }
+}
+
+.video-container, .map-container {
+    position: relative;
+    padding-bottom: 56.25%; /* Para una proporción de 16:9 */
+    overflow: hidden;
+    width: 100%;
+}
+
+.video-js, .map-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Estilos básicos para el menú */
+#action_menu {
+    position: fixed; /* Hace que el menú flote */
+    bottom: 20px; /* Posición desde la parte inferior de la pantalla */
+    right: 20px; /* Posición desde la derecha de la pantalla */
+    background-color: #ff6347; /* Color de fondo naranja brillante */
+    padding: 10px 20px; /* Espaciado interno */
+    border-radius: 15px; /* Bordes redondeados */
+    z-index: 1000; /* Asegura que el menú esté por encima de otros elementos */
+}
+
+/* Estilos para los botones dentro del menú */
+#action_menu button {
+    background-color: #ffffff; /* Fondo blanco */
+    border: none; /* Sin borde */
+    color: #ff4500; /* Texto naranja oscuro */
+    padding: 10px 20px; /* Espaciado interno para los botones */
+    font-size: 16px; /* Tamaño del texto */
+    cursor: pointer; /* Cambia el cursor a un puntero al pasar sobre el botón */
+    border-radius: 5px; /* Bordes redondeados para los botones */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave para el fondo y el texto */
+}
+
+/* Efecto de hover para los botones */
+#action_menu button:hover {
+    background-color: #ff4500; /* Fondo naranja oscuro al pasar el mouse */
+    color: #ffffff; /* Texto blanco al pasar el mouse */
+}

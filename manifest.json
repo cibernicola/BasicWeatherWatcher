@@ -1,0 +1,20 @@
+{
+    "name": "SalouCams",
+    "version": "1.0",
+    "description": "Cámaras en vivo de Salou e información meteorológica actualizada desde TV3, AEMET y Meteo.cat.",
+    "manifest_version": 2,
+    "icons": {
+        "48": "icon.png"
+    },
+    "permissions": [
+        "fullscreen",
+        "activeTab",
+        "<all_urls>"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["script.js"]
+        }
+    ]
+}

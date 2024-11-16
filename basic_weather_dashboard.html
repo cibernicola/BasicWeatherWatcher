@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌧️SalouCams🌅</title>
+    <link rel="manifest" href="./manifest.json">
     <!-- Video.js CSS -->
     <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet" />
     <!-- hls.js JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <!-- Video.js JavaScript -->
     <script src="https://vjs.zencdn.net/7.14.3/video.min.js"></script>
-
+    <link rel="stylesheet" href="./style.css">
     <!-- SEO Metadata -->
     <meta name="description" content="Cámaras en vivo de Salou e información meteorológica actualizada desde TV3, AEMET y Meteo.cat.">
     <meta name="keywords" content="SalouCams, cámaras en vivo de Salou, tiempo en Salou, predicción meteorológica, lluvia en Salou">
@@ -20,93 +21,19 @@
     <meta property="og:image" content="URL_DE_LA_IMAGEN_RELEVANTE"> <!-- Reemplaza con la URL de una imagen relevante -->
     <meta property="og:url" content="https://www.cibernicola.es/weather-dashboard/">
 
-    <style>
-        body {
-            background-color: #121212;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        #menu {
-            width: 100%;
-            height: 30px;
-            background-color: #333;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 10px;
-        }
-
-        #menu a, #menu button {
-            color: gray;
-            text-decoration: none;
-            padding: 5px 5px;
-            transition: background-color 0.3s, color 0.3s;
-            cursor: pointer;
-            display: inline-block;
-        }
-
-        #menu a:hover, #menu button:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        @media (max-width: 768px) {
-            #menu {
-                flex-direction: column;
-                align-items: flex-start;
-                justify-content: center;
-            }
-
-            #menu a, #menu button {
-                width: 100%;
-                text-align: left;
-                margin-bottom: 5px;
-            }
-        }
-
-        #maincontent {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            padding: 20px;
-            height: calc(100vh - 50px);
-            background-color: #121212;
-        }
-
-        @media (max-width: 768px) {
-            #maincontent {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .video-container, .map-container {
-            position: relative;
-            padding-bottom: 56.25%; /* Para una proporción de 16:9 */
-            overflow: hidden;
-            width: 100%;
-        }
-
-        .video-js, .map-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-    </style>
 </head>
 
 <body>
-    <div id="menu">
+    <div id = action_menu>
         <button id="fullscreenButton">full screen</button>
+        <button id="playAllVideos">play</button>
+    </div>
+
+    <div id="menu">
         <a href="https://www.3cat.cat/el-temps/cameres/" target="_blank">TV3 cams</a>
         <a href="https://www.aemet.es/es/eltiempo/prediccion/municipios/salou-id43905" target="_blank">aemet.es </a>
         <a href="https://www.meteo.cat/observacions/plujaONeu" target="_blank">meteo.cat</a> 
         <a href="https://aplicacions.aca.gencat.cat/aetr/vishid/#fluvial_warning" target="_blank">Riesgo fluvial (Cat.)</a> 
-       
         <a href="https://www.meteo.cat/observacions/plujaONeu" target="_blank">source code</a> 
         <a href="https://links.cibernicola.es" target="_blank">links cibernicola</a> 
     </div>
@@ -135,74 +62,7 @@
             <video id="video3" class="video-js vjs-default-skin" controls preload="auto" autoplay muted></video>
         </div>
 
-        <script>
-            // URLs de los videos
-            const videoSources = {
-                'video1': 'https://5940924978228.streamlock.net:443/8107/8107/playlist.m3u8',
-                'video2': 'https://5940924978228.streamlock.net:443/8101/8101/playlist.m3u8',
-                'video3': 'https://5940924978228.streamlock.net:443/8105/8105/playlist.m3u8'
-            };
-
-            // Inicializar Video.js y hls.js
-            if (Hls.isSupported()) {
-                const videos = ['video1', 'video2', 'video3'];
-                videos.forEach(videoId => {
-                    const videoElement = document.getElementById(videoId);
-                    const source = document.createElement('source');
-                    source.src = videoSources[videoId];
-                    source.type = 'application/x-mpegURL';
-                    videoElement.appendChild(source);
-
-                    const hlsInstance = new Hls();
-                    hlsInstance.loadSource(videoSources[videoId]);
-                    hlsInstance.attachMedia(videoElement);
-                    hlsInstance.on(Hls.Events.MANIFEST_PARSED, function() {
-                        videoElement.play();
-                    });
-                });
-
-            document.addEventListener('DOMContentLoaded', () => {
-                const fullscreenButton = document.getElementById('fullscreenButton');
-                let isFullScreenMode = false;
-
-                // Función para activar o desactivar el modo de full screen
-                function toggleFullScreen() {
-                    if (isFullScreenMode) {
-                        if (document.exitFullscreen) {
-                            document.exitFullscreen().catch(error => {
-                                console.error('Error al intentar salir del modo de full screen:', error);
-                            });
-                        } else if (document.mozCancelFullScreen) { // Firefox
-                            document.mozCancelFullScreen();
-                        } else if (document.webkitExitFullscreen) { // Chrome, Safari y Opera
-                            document.webkitExitFullscreen();
-                        } else if (document.msExitFullscreen) { // IE/Edge
-                            document.msExitFullscreen();
-                        }
-                    } else {
-                        const bodyElement = document.body;
-                        if (bodyElement.requestFullscreen) {
-                            bodyElement.requestFullscreen().catch(error => {
-                                console.error('Error al intentar entrar en modo de full screen:', error);
-                            });
-                        } else if (bodyElement.mozRequestFullScreen) { // Firefox
-                            bodyElement.mozRequestFullScreen();
-                        } else if (bodyElement.webkitRequestFullscreen) { // Chrome, Safari y Opera
-                            bodyElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-                        } else if (bodyElement.msRequestFullscreen) { // IE/Edge
-                            bodyElement.msRequestFullscreen();
-                        }
-                    }
-
-                    // Cambiar el estado del botón y su texto
-                    isFullScreenMode = !isFullScreenMode;
-                    fullscreenButton.textContent = isFullScreenMode ? 'exit full screen' : 'full screen';
-                }
-
-                // Asignar la función al evento de clic del botón
-                fullscreenButton.addEventListener('click', toggleFullScreen);
-            });}
-        </script>
+    <script src="./scripts.js"></script>
     </div>
 </body>
 </html>
