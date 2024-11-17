@@ -117,3 +117,27 @@ body {
     background-color: #ff4500;
     color: white;
 }
+/* Estilos básicos para la página */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilo del sidebar */
+.bottom_sidebar {
+    width: 100vh; /* Ancho del sidebar */
+    height: 250px; /* Altura completa de la ventana */
+    background-color: #f4f4f4; /* Color de fondo del sidebar */
+    position: fixed; /* Posición fija para que no se mueva al scroll */
+    top: 0; /* Alineado a la parte superior */
+    left: 0; /* Alineado a la izquierda */
+    z-index: 1000;
+    background-color: transparent;
+    position: relative;
+}
+
+/* Estilo del contenido principal */
+.main-content {
+    margin-left: 250px; /* Margen izquierdo igual al ancho del sidebar para evitar solapamiento */
+    padding: 20px;
+}
