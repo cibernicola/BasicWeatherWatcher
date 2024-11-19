@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <!-- Video.js JavaScript -->
     <script src="https://vjs.zencdn.net/7.14.3/video.min.js"></script>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./styles.css">
     <!-- SEO Metadata -->
     <meta name="description" content="Cámaras en vivo de Salou e información meteorológica actualizada desde TV3, AEMET y Meteo.cat.">
     <meta name="keywords" content="SalouCams, cámaras en vivo de Salou, tiempo en Salou, predicción meteorológica, lluvia en Salou">
@@ -28,11 +28,15 @@
 
 
     <div id = action_menu>
+        <button id="openModal">avisos AEMET </button>
         <button id="fullscreenButton">full screen</button>
         <button id="playAllVideos">play</button>
     </div>
+    
+   
     <div class="hamburger" onclick="toggleMenu()">☰</div>
     <ul class="menu" id="menu">
+        <li><a class="menuItem" <a href=" https://x.com/emergenciescat" target="_blank">Protecció civil Twitter</a></li>
         <li><a class="menuItem" <a href="https://www.3cat.cat/el-temps/cameres/" target="_blank">TV3 cams</a></li>
         <li><a class="menuItem" <a href="https://www.aemet.es/es/eltiempo/prediccion/municipios/salou-id43905" target="_blank">aemet.es </a></li>
         <li><a class="menuItem" <a href="https://www.meteo.cat/observacions/plujaONeu" target="_blank">meteo.cat</a> </li>
@@ -66,8 +70,19 @@
         <div class="video-container">
             <video id="video3" class="video-js vjs-default-skin" controls preload="auto" autoplay muted></video>
         </div>
-
-    <script src="./scripts.js"></script>
     </div>
+    <!-- Ventana emergente para el lector de RSS -->
+    <div id="rss-feed-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="hover-modal">
+                <span class="close hover-close">&times;</span>
+                <div id="hover-content"></div>
+            </div>
+            <h2>Avisos AEMET Catalunya</h2>
+            <div id="rss-feed"></div>
+        </div>
+    </div>
+    <script src="./script.js"></script>
 </body>
 </html>
